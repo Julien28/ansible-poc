@@ -1,0 +1,9 @@
+---
+ - hosts: database,webserver
+
+   tasks:
+     - name: Update cache
+       apt: update_cache=yes
+     - name: Upgrade full system
+       apt: upgrade=dist
+...

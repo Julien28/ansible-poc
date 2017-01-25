@@ -1,0 +1,4 @@
+---
+# handlers file for apt_mysql
+- name: Restart MySQL
+  service: name=mysql state=restarted

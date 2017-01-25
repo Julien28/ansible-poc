@@ -1,5 +1,5 @@
 ---
- - hosts: database,webserver
+ - hosts: all
 
    tasks:
      - name: Update cache

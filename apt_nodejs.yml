@@ -1,6 +1,11 @@
 ---
   - hosts: webserver
 
+    pre_tasks:
+
+      - name: Ensure Node.js app folder exists.
+        file: "path={{ node_apps_location }} state=directory"
+
     tasks:
 
       - name: Check for nodejs repo if exist /etc/apt/sources.list.d/nodesource.list
@@ -25,10 +30,10 @@
       - name: Install Forever (to run our Node.js app).
         npm: name=forever global=yes state=latest
 
-      - name: Ensure Node.js app folder exists.
-        file: "path={{ node_apps_location }} state=directory"
-  
-      - name: Add Apache virtualhost for Drupal 8 development.
+      - name: Copy example Node.js app package.json to server.
+        copy: "src=app dest={{ node_apps_location }}"
+
+      - name: Add app.js to nodes.
         template:
           src: "templates/app.js.j2"
           dest: "{{ node_apps_location }}/app/app.js"
@@ -36,9 +41,6 @@
           group: root
           mode: 0644
 
-      - name: Copy example Node.js app package.json to server.
-        copy: "src=app dest={{ node_apps_location }}"
-  
       - name: Install app dependencies defined in package.json.
         npm: "path={{ node_apps_location }}/app"
 

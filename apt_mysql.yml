@@ -18,16 +18,14 @@
          - python-mysqldb
          - mysql-server
 
-    - name: Create database user
-      mysql_user: user=ansible password=ansible priv=*.*:ALL state=present
-
     - name: Create database
       mysql_db: db=bdd1 state=present
 
     - name: Create database user
       mysql_user: user=ansible password=ansible priv=*.*:ALL state=present
 
-    - name: Import data
-      mysql_db: name=all state=import target= :/tmp/{{ inventory_hostname }}.sql
+    - name: import data database
+      mysql_db: name=bdd1 state=import target=/home/ubuntu/data.sql
+
 ...
 

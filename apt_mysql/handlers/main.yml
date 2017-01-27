@@ -2,3 +2,6 @@
 # handlers file for apt_mysql
 - name: Restart MySQL
   service: name=mysql state=restarted
+
+- name: import example database
+  mysql_db: name=example state=import target=/poc-ansible/data.sql

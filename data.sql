@@ -1,8 +1,8 @@
-use 'bdd1';
+use 'poc-base';
 
 create table user
 (
-    id INT PRIMARY KEY NOT NULL,
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nom VARCHAR(100),
     prenom VARCHAR(100),
     groupe VARCHAR(255)

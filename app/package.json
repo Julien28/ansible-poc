@@ -1,9 +1,10 @@
 {
-  "name": "examplenodeapp",
-  "description": "Example Express Node.js app.",
-  "author": "Jeff Geerling <geerlingguy@mac.com>",
+  "name": "poc_ansible_app",
+  "description": "POC ansible application.",
+  "author": "Julien Doucet <julien.doucet14@gmail.com>",
   "dependencies": {
-    "express": "3.x.x"
+    "express": "^3.x.x",
+    "mysql": "^2.x.x"
   },
   "engine": "node >= 0.10.6"
 }

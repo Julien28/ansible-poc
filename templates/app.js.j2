@@ -2,12 +2,37 @@
 // @see http://howtonode.org/getting-started-with-express
 
 // Load the express module.
-var express = require('express'),
-app = express.createServer();
+var express = require('express');
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : '192.168.0.103',
+  user     : 'ansible',
+  password : 'ansible',
+  database : 'poc-base'
+});
+var app = express();
+
+connection.connect(function(err){
+if(!err) {
+    console.log("Database is connected ... nn");    
+} else {
+    console.log("Error connecting database ... nn");    
+}
+});
 
 // Respond to requests for / with 'Hello World'.
 app.get('/', function(req, res){
-    res.send('Hello World! I am {{ inventory_hostname }}');
+//    res.send('Hello World! I am {{ inventory_hostname }}');
+    connection.query('SELECT * from user', function(err, rows, fields) {
+    connection.end();
+      if (!err) {
+        console.log('The solution is: ', rows);
+        res.json(rows);
+      } else {
+        console.log('Error while performing Query.');
+        res.send('Error while performing Query.');
+      }
+      });
 });
 
 // Listen on port 80 (like a true web server).

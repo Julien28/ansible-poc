@@ -1,31 +1,41 @@
 ---
+
 - hosts: database
 
+  pre_tasks:
+
+    - name: Copy sql file to server.
+      copy: "src=data.sql dest=/tmp/data.sql"
+
   roles:
+
     - apt_mysql
 
   tasks:
 
-    - name: Remove the MySQL test database.
-      mysql_db: db=test state=absent
-
-    - name: Create a database for Drupal.
-      mysql_db: db=poc-base state=present
-
-    - name: Install python-mysql ans mysql
+    - name: Install python-mysql
       apt: name={{ item }} state=present
       with_items:
          - python-mysqldb
-         - mysql-server
 
-    - name: Create database
-      mysql_db: db=bdd1 state=present
+    - name: Remove the MySQL test database.
+      mysql_db: db=test state=absent
+
+    - name: Remove the MySQL poc-base database.
+      mysql_db: db=poc-base state=absent
+
+    - name: Create a database for POC.
+      mysql_db: db=poc-base state=present
 
     - name: Create database user
-      mysql_user: user=ansible password=ansible priv=*.*:ALL state=present
+      mysql_user:
+        name: ansible
+        password: ansible
+        host: 192.168.0.%
+        priv: 'poc-base.*:ALL'
+        state: present
 
-    - name: import data database
-      mysql_db: name=bdd1 state=import target=/home/ubuntu/data.sql
-
+    - name: import data database with data.sql
+      mysql_db: name=poc-base state=import target=/tmp/data.sql
 ...
 

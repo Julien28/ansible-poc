@@ -11,21 +11,23 @@
 
     tasks:
 
-      - name: Check for nodejs repo if exist /etc/apt/sources.list.d/nodesource.list
-        stat: path=/etc/apt/sources.list.d/nodesource.list
-        register: noderepo
-
       - name: Add Node.JS Repository.
-        shell: curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-        args:
-          executable: /bin/bash
-        when: not noderepo.stat.exists
+        apt_repository:
+          repo: deb https://deb.nodesource.com/node_7.x xenial main
+          state: present
+          filename: 'nodesource'
+
+      - name: Add Node.JS source Repository
+        apt_repository:
+          repo: deb-src https://deb.nodesource.com/node_7.x xenial main
+          state: present
+          filename: 'nodesource'
 
       - name: Refresh APT cache...
         apt: update_cache=yes
 
       - name: Install Node.JS, npm and build tools.
-        apt: name={{ item }} state=present
+        apt: name={{ item }} state=latest
         with_items:
           - nodejs
           - build-essential

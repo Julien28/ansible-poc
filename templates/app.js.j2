@@ -24,6 +24,7 @@ if(!err) {
 app.get('/', function(req, res){
     connection.query('SELECT * from user', function(err, results, fields) {
 
+      connection.end();
 
       if (err) throw err;
       
@@ -44,7 +45,6 @@ app.get('/', function(req, res){
       
       output += '</ul></body></html>';
  
-      connection.end();
       
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(output);

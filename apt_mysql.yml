@@ -2,6 +2,9 @@
 
 - hosts: database
 
+  vars_files:
+    - vars.yml
+
   pre_tasks:
 
     - name: Copy sql file to server.
@@ -26,6 +29,8 @@
 
     - name: Create a database for POC.
       mysql_db: db=poc-base state=present
+      notify:
+        - Restart nodejs
 
     - name: Create database user
       mysql_user:
@@ -34,8 +39,19 @@
         host: 192.168.0.%
         priv: 'poc-base.*:ALL'
         state: present
+      notify:
+        - Restart nodejs
 
     - name: import data database with data.sql
       mysql_db: name=poc-base state=import target=/tmp/data.sql
-...
 
+  handlers:
+
+    - name: Restart nodejs
+      command: "forever restart {{ node_apps_location }}app/app.js"
+      failed_when: false
+      delegate_to: "{{item}}"
+      delegate_facts: True
+      with_items: "{{groups['webserver']}}"
+
+...

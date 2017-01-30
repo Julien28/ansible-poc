@@ -43,11 +43,12 @@ app.get('/', function(req, res){
       }
       
       output += '</ul></body></html>';
+ 
+      connection.end();
       
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(output);
       
-    connection.end();
       });
 });
 

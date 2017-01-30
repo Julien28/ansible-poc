@@ -25,22 +25,27 @@ app.get('/', function(req, res){
     connection.query('SELECT * from user', function(err, results, fields) {
 
 
-			if (err) throw err;
+      if (err) throw err;
       
-			var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1><ul><table border=1><tr>';
-			for (var index in fields) {
-				output += '<td>' + fields[index].name + '</td>';
-			}
-			output += '</tr>';
-			for (var index in results) {
-				output += '<tr><td>' + results[index].Recipe + '</td>';
-				output += '<td>' + results[index].Amount + '</td>';
-				output += '<td>' + results[index].Unit + '</td>';
-				output += '<td>' + results[index].Ingredient + '</td></tr>';
-			}
-			output += '</ul></body></html>';
-			res.writeHead(200, {'Content-Type': 'text/html'});
-		  res.end(output);
+      var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1><ul><table border=1><tr>';
+      
+      for (var index in fields) {
+        output += '<td>' + fields[index].name + '</td>';
+      }
+      
+      output += '</tr>';
+      
+      for (var index in results) {
+        output += '<tr><td>' + results[index].Recipe + '</td>';
+        output += '<td>' + results[index].Amount + '</td>';
+        output += '<td>' + results[index].Unit + '</td>';
+        output += '<td>' + results[index].Ingredient + '</td></tr>';
+      }
+      
+      output += '</ul></body></html>';
+      
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(output);
       
     connection.end();
       });

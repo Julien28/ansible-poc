@@ -36,10 +36,10 @@ app.get('/', function(req, res){
       output += '</tr>';
       
       for (var index in results) {
-        output += '<tr><td>' + results[index].Recipe + '</td>';
-        output += '<td>' + results[index].Amount + '</td>';
-        output += '<td>' + results[index].Unit + '</td>';
-        output += '<td>' + results[index].Ingredient + '</td></tr>';
+        output += '<tr><td>' + results[index].id + '</td>';
+        output += '<td>' + results[index].nom + '</td>';
+        output += '<td>' + results[index].prenom + '</td>';
+        output += '<td>' + results[index].group + '</td></tr>';
       }
       
       output += '</ul></body></html>';

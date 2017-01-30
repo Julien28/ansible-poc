@@ -8,4 +8,4 @@ create table user
     groupe VARCHAR(255)
 ) engine innodb;
 
-INSERT INTO user (nom,prenom,groupe) VALUES("Doucet","Julien","Stagiaire"),("Vidal","Philippe","Ingénieur"),("Jarriault","Tony","Architecte"),("Alves","David","Chef de Projet"),("Abdlmounia","Abdelali","Ingénieur");
+INSERT INTO user (nom,prenom,groupe) VALUES("Tata","Papa","Stagiaire"),("Titi","Pipi","Ingénieur"),("Tutu","Pupu","Architecte"),("Tete","Pepe","Chef de Projet"),("Toto","Popo","Ingénieur");

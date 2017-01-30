@@ -24,10 +24,10 @@ if(!err) {
 app.get('/', function(req, res){
     connection.query('SELECT * from user', function(err, results, fields) {
 
-      connection.end();
 
       if (err) throw err;
       
+
       var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1><ul><table border=1><tr>';
       
       for (var index in fields) {

@@ -48,7 +48,7 @@
   handlers:
 
     - name: Restart nodejs
-      command: "forever restart {{ node_apps_location }}app/app.js"
+      command: "forever restart {{ node_apps_location }}/app/app.js"
       failed_when: false
       delegate_to: "{{item}}"
       delegate_facts: True

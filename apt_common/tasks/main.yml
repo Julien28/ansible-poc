@@ -1,0 +1,10 @@
+---
+- name: Update cache
+  apt: update_cache=yes
+- name: Upgrade full system
+  apt: upgrade=dist
+- name: Ensure NTP (for time synchronization) is installed.
+  apt: name=ntp state=present
+- name: Ensure NTP is running.
+  service: name=ntp state=started enabled=yes
+...

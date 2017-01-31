@@ -61,9 +61,9 @@
   
       - name: Start example Node.js app.
         command: "forever start {{ node_apps_location }}/app/app.js"
-        when: "forever_list.stdout.find('{{ node_apps_location }}/app/app.js') == -1"
+        when: "'{{ node_apps_location }}/app/app.js' not in forever_list.stdout"
 
       - name: Restart example Node.js app.
         command: "forever restart {{ node_apps_location }}/app/app.js"
-        when: "forever_list.stdout.find('{{ node_apps_location }}/app/app.js') != -1"
+        when: "'{{ node_apps_location }}/app/app.js' in forever_list.stdout"
 ...

@@ -1,6 +1,9 @@
 ---
 - hosts: webserver
 
+  vars_files:
+    - vars.yml
+
   pre_tasks:
 
     - name: Ensure Node.js app folder exists.
@@ -8,5 +11,5 @@
 
   roles:
 
-   - apt_nodesjs
+   - apt_nodejs
 ...

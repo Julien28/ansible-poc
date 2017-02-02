@@ -1,3 +1,26 @@
 ---
 
-... 
+- hosts: webserver
+
+  tasks:
+
+    - name: check if port 80 is open
+      shell: ss -tp state listening sport = :80
+    - name: Get service on port 80
+      shell: netstat -tunlp | grep ":80" | sed -e 's/.*\///'
+      register: results
+
+    - name: See what netstat returned
+      debug: var=results
+
+- hosts: database
+
+  tasks:
+
+    - name: check if port 3306 is open
+      shell: ss -tp state listening sport = :3306
+    - name: Get service on port 3306
+      shell: netstat -tunlp | grep ":3306" | sed -e 's/.*\///'
+      register: results
+
+...

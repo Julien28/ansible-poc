@@ -9,10 +9,9 @@
     - name: Get service on port 80
       shell: netstat -tunlp | grep ":80" | sed -e 's/.*\///'
       register: results
-
     - name: See what netstat returned
       debug: var=results
-
+ 
 - hosts: database
 
   tasks:
@@ -22,5 +21,14 @@
     - name: Get service on port 3306
       shell: netstat -tunlp | grep ":3306" | sed -e 's/.*\///'
       register: results
-
+    - name: Retrieve user from mysql
+      command: >
+        mysql --user=ansible --password=ansible poc-base
+        --host=192.168.0.103 --batch --skip-column-names
+        --execute="SELECT * from user"
+      register: user
+      changed_when: False
+    - name: Do something with user
+      debug: "{{ item }}"
+      with_items: user
 ...

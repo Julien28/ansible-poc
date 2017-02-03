@@ -31,4 +31,13 @@
     - name: Do something with user
       debug: "{{ item }}"
       with_items: user
+
+    - name: Make sure connect to database
+      mysql_db:
+        login_user=ansible
+        login_password=ansible
+        login_host=192.168.0.103
+        login_port=3306
+        name=poc-base
+        state=present
 ...

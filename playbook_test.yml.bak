@@ -3,9 +3,14 @@
 - hosts: webserver
 
   tasks:
-    - name: Check if port 80 is open
-      wait_for: host={{ inventory_hostname }} port=80
-      delegate_to: localhost
+
+    - name: check if port 80 is open
+      shell: ss -tp state listening sport = :80
+    - name: Get service on port 80
+      shell: netstat -tunlp | grep ":80" | sed -e 's/.*\///'
+      register: results
+    - name: See what netstat returned
+      debug: var=results
  
 - hosts: database
 

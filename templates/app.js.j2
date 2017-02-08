@@ -29,7 +29,11 @@ app.get('/', function(req, res){
 //      if (err) throw err;
       
 
-      var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1><ul><table border=1><tr>';
+      var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1>';
+      
+      if (!err) {
+      
+       output += '<ul><table border=1><tr>'
       
       for (var index in fields) {
         output += '<td>' + fields[index].name + '</td>';
@@ -37,7 +41,6 @@ app.get('/', function(req, res){
       
       output += '</tr>';
       
-      if (!err) {
 
       for (var index in results) {
         output += '<tr><td>' + results[index].id + '</td>';
@@ -46,14 +49,13 @@ app.get('/', function(req, res){
         output += '<td>' + results[index].groupe + '</td></tr>';
       }
 
+      output += '</ul></body></html>';
+
       } else {
 
       output += '<p>Problem with database.<\p>'
 
       }
-      
-      output += '</ul></body></html>';
- 
       
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(output);

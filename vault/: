@@ -1,8 +1,0 @@
----
-
-- hosts: webserver
-  user: ansible2
-  
-  roles:
-
-    - vault/

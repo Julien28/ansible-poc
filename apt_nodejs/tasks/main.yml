@@ -48,6 +48,8 @@
   command: forever list
   register: forever_list
   changed_when: false
+  tags:
+    - deploy
 
 - name: Start example Node.js app.
   command: "forever start {{ node_apps_location }}/app/app.js"

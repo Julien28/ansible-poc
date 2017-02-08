@@ -11,14 +11,24 @@
         url: http://{{ inventory_hostname }}
         return_content: yes
       register: webpage_static
-      failed_when: "'Hello World! I am {{ inventory_hostname }}' not in webpage_static.content"
+
+    - name: Static content test result...
+      assert:
+        that:
+          - "'Hello World! I am {{ inventory_hostname }}' in webpage_static.content"
+        msg: "There is a problem with static content."
 
     - name: Check if dynamic content of web page is OK.
       uri:
         url: http://{{ inventory_hostname }}
         return_content: yes
       register: webpage_dynamic
-      failed_when: "'Pipi' not in webpage_dynamic.content"
+
+    - name: Dynamic content test result...
+      assert:
+        that:
+          - "'Pipi' in webpage_dynamic.content"
+        msg: "There is a problem with dynamic content (BDD)."
 
 - hosts: database
 

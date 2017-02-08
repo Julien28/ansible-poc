@@ -1,39 +1,45 @@
 ---
-
 - hosts: webserver
 
   tasks:
     - name: Check if port 80 is open
-      wait_for: host={{ inventory_hostname }} port=80
+      wait_for: host={{ inventory_hostname }} port=80 timeout=5
       delegate_to: localhost
- 
+
+    - name: Check if static content of web page is OK.
+      uri: 
+        url: http://{{ inventory_hostname }}
+        return_content: yes
+      register: webpage_static
+      failed_when: "'Hello World! I am {{ inventory_hostname }}' not in webpage_static.content"
+
+    - name: Check if dynamic content of web page is OK.
+      uri:
+        url: http://{{ inventory_hostname }}
+        return_content: yes
+      register: webpage_dynamic
+      failed_when: "'Pipi' not in webpage_dynamic.content"
+
 - hosts: database
 
   tasks:
 
-    - name: check if port 3306 is open
-      shell: ss -tp state listening sport = :3306
-    - name: Get service on port 3306
-      shell: netstat -tunlp | grep ":3306" | sed -e 's/.*\///'
-      register: results
-    - name: Retrieve user from mysql
+    - name: Check if port 3306 is open
+      wait_for: host={{ inventory_hostname }} port=3306 timeout=5
+      delegate_to: localhost
+
+    - name: Retrieve users from poc-base database.
       command: >
         mysql --user=ansible --password=ansible poc-base
         --host=192.168.0.103 --batch --skip-column-names
         --execute="SELECT * from user"
       register: user
       changed_when: False
-    - name: Do something with user
-      debug: 
-        var: "{{ item }}"
-      with_items: user
 
-    - name: Make sure connect to database
-      mysql_db:
-        login_user=ansible
-        login_password=ansible
-        login_host=192.168.0.103
-        login_port=3306
-        name=poc-base
-        state=present
+    - name: Check the result of MySQL request.
+      assert:
+        that:
+          - "'Pipi' in user.stdout"
+        msg: "'Pipi' not found in request result."
+
 ...

@@ -8,7 +8,8 @@ var connection = mysql.createConnection({
   host     : '192.168.0.103',
   user     : 'ansible',
   password : 'ansible',
-  database : 'poc-base'
+  database : 'poc-base',
+  connectTimeout: 3000
 });
 var app = express();
 
@@ -22,10 +23,10 @@ if(!err) {
 
 // Respond to requests for / with 'Hello World'.
 app.get('/', function(req, res){
-    connection.query('SELECT * from user', function(err, results, fields) {
+    connection.query({sql: 'SELECT * from user', timeout: 3000}, function(err, results, fields) {
 
 
-      if (err) throw err;
+//      if (err) throw err;
       
 
       var output = '<html><head></head><body><h1>Hello World! I am {{ inventory_hostname }}</h1><ul><table border=1><tr>';
@@ -36,11 +37,19 @@ app.get('/', function(req, res){
       
       output += '</tr>';
       
+      if (!err) {
+
       for (var index in results) {
         output += '<tr><td>' + results[index].id + '</td>';
         output += '<td>' + results[index].nom + '</td>';
         output += '<td>' + results[index].prenom + '</td>';
         output += '<td>' + results[index].groupe + '</td></tr>';
+      }
+
+      } else {
+
+      output += '<p>Problem with database.<\p>'
+
       }
       
       output += '</ul></body></html>';

@@ -1,12 +1,12 @@
 ---
 - hosts: webserver
+  tags:
+    - deploy
+
+  vars_files:
+    - vars.yml
 
   pre_tasks:
-
-    - include_vars:
-        file: vars.yml
-        tags:
-          - deploy
 
     - name: Ensure Node.js app folder exists.
       file: "path={{ node_apps_location }} state=directory"

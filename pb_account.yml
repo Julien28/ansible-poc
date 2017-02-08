@@ -1,0 +1,17 @@
+---
+- hosts: webserver, database
+
+  vars_files:
+    - vars/account.yml
+
+  tasks:
+
+    - debug:
+        msg: "Try to create {{ item.key }} user with password {{ item.value.pass|password_hash('sha512') }}."
+      with_dict: "{{ users }}"
+
+    - name: Add Linux account for each user in account file.
+      user:
+        name: "{{ item.key }}"
+        password: "{{ item.value.pass|password_hash('sha512') }}"
+      with_dict: "{{ users }}"

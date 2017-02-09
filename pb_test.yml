@@ -51,5 +51,8 @@
         that:
           - "'Pipi' in user.stdout"
         msg: "'Pipi' not found in request result."
+    
+    - name: Check if users exists
 
 ...
+

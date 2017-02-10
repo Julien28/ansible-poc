@@ -1,31 +1,22 @@
 ---
-- groups:
-    name: "testtttttttttttttttttttttttttttttttttt"
-    state: present
-
-  users:
-    tata: 
-      name: tata user
-      pass: papa
-      uid: 0001
-      groups: "test"
-    titi: 
-      name: titi user
-      pass: pipi
-      uid: 0002
-      groups: "test"
-    tutu: 
-      name: tutu user
-      pass: pupu
-      uid: 0003
-      groups: "test"
-    toto: 
-      name: toto user
-      pass: popo
-      uid: 0004
-      groups: "test"
-    tete: 
-      name: tete user
-      pass: pepe
-      uid: 0005
-      groups: "test"
+users:
+  tata: 
+    name: tata user
+    pass: papa
+    uid: 0001       
+  titi:
+    name: titi user
+    pass: pipi
+    uid: 0002
+  tutu: 
+    name: tutu user
+    pass: pupu
+    uid: 0003
+  toto: 
+    name: toto user
+    pass: popo
+    uid: 0004
+  tete: 
+    name: tete user
+    pass: pepe
+    uid: 0005

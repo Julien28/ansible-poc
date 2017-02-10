@@ -46,10 +46,21 @@
       register: user
       changed_when: False
 
-    - name: Check the result of MySQL request.
+    - name: Check the result of MySQL request
       assert:
         that:
           - "'Pipi' in user.stdout"
         msg: "'Pipi' not found in request result."
+
+    - name: Check /etc/group contains "tata"
+      command: grep -Fxq "tata" /etc/group
+      register: checkuser
+      check_mode: true
+      ignore_errors: True
+      changed_when: False
+
+    - name: Display message if /etc/group contains "tata" "titi" "toto" "tutu" "tete"
+      debug: msg="C'est bon!"
+      when: checkuser == 0
 ...
 

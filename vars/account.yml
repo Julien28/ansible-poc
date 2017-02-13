@@ -1,22 +1,28 @@
 ---
+
 users:
-  tata: 
+  tata:
     name: tata user
     pass: papa
-    uid: 0001       
+    uid: 1001
+    group: gaga
   titi:
     name: titi user
     pass: pipi
-    uid: 0002
-  tutu: 
+    uid: 1002
+    group: gigi
+  tutu:
     name: tutu user
     pass: pupu
-    uid: 0003
-  toto: 
+    uid: 1003
+    group: gugu
+  toto:
     name: toto user
     pass: popo
-    uid: 0004
-  tete: 
+    uid: 1004
+    group: gogo
+  tete:
     name: tete user
     pass: pepe
-    uid: 0005
+    uid: 1005
+    group: gege 

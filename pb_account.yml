@@ -7,11 +7,24 @@
   tasks:
 
     - debug:
+        msg: "Try to create {{ item.value.group }} group."
+        verbosity: 1
+      with_dict: "{{ users }}"
+
+    - name: Add necessary groups for users in account file.
+      group:
+        name: "{{ item.value.group }}"
+        state: present
+      with_dict: "{{ users }}"
+
+    - debug:
         msg: "Try to create {{ item.key }} user with password {{ item.value.pass|password_hash('sha512') }}."
+        verbosity: 1
       with_dict: "{{ users }}"
 
     - name: Add Linux account for each user in account file.
       user:
         name: "{{ item.key }}"
         password: "{{ item.value.pass|password_hash('sha512') }}"
+        group: "{{ item.value.group }}"
       with_dict: "{{ users }}"
